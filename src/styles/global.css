@@ -112,10 +112,11 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     color: rgb(var(--rgb-navy));
-    letter-spacing: -0.03em;
-    line-height: 1.06;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
     font-weight: 700;
   }
+  h1 { letter-spacing: -0.035em; line-height: 1.02; }
 
   a { color: inherit; text-decoration: none; }
 
@@ -567,3 +568,131 @@
 ::-webkit-scrollbar-track { background: rgb(var(--rgb-stone)); }
 ::-webkit-scrollbar-thumb { background: #CBCCD2; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: rgb(var(--rgb-red)); }
+
+/* ════════════════════════════════════════════════════════════════
+   EDITORIAL 2027 — magazine-style helpers
+   Section numbers, hairlines, service hover-list, scroll progress
+   ════════════════════════════════════════════════════════════════ */
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase; color: rgb(var(--rgb-muted));
+  margin-bottom: 1.5rem;
+}
+.section-eyebrow-num {
+  color: rgb(var(--rgb-red-deep)); font-weight: 600;
+}
+.section-eyebrow::after {
+  content: ""; flex: 1; max-width: 80px; height: 1px;
+  background: rgb(var(--rgb-navy) / 0.18);
+}
+.section-eyebrow.light, .section-eyebrow-light { color: rgb(255 255 255 / 0.55); }
+.section-eyebrow.light .section-eyebrow-num, .section-eyebrow-light .section-eyebrow-num { color: rgb(var(--rgb-red-bright)); }
+.section-eyebrow.light::after, .section-eyebrow-light::after { background: rgb(255 255 255 / 0.2); }
+
+/* Hairline divider */
+.hairline { height: 1px; background: rgb(var(--rgb-navy) / 0.12); width: 100%; }
+.hairline-light { height: 1px; background: rgb(255 255 255 / 0.14); width: 100%; }
+
+/* Editorial pull-quote */
+.pull-quote {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.25; letter-spacing: -0.02em;
+  color: rgb(var(--rgb-navy)); text-wrap: balance;
+}
+.pull-quote em { font-style: normal; color: rgb(var(--rgb-red-deep)); font-weight: 700; }
+
+/* ════════ SERVICE HOVER-LIST — the editorial signature move ════════ */
+.svc-list { border-top: 1px solid rgb(var(--rgb-navy) / 0.1); }
+.svc-row {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 1.5rem; align-items: center;
+  padding: 1.5rem 0.25rem; border-bottom: 1px solid rgb(var(--rgb-navy) / 0.1);
+  transition: padding 0.5s cubic-bezier(0.4,0,0.2,1), color 0.35s ease;
+  position: relative; isolation: isolate;
+}
+.svc-row::before {
+  content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0;
+  background: rgb(var(--rgb-red)); transition: width 0.55s cubic-bezier(0.4,0,0.2,1); z-index: 1;
+}
+.svc-row:hover { padding-left: 1.5rem; padding-right: 0; }
+.svc-row:hover::before { width: 100%; }
+.svc-num {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; color: rgb(var(--rgb-muted)); width: 2.6rem; flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+.svc-row:hover .svc-num { color: rgb(var(--rgb-red-deep)); }
+.svc-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem); line-height: 1.04; letter-spacing: -0.025em;
+  color: rgb(var(--rgb-navy)); transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.svc-row:hover .svc-name { transform: translateX(0.4rem); }
+.svc-cta {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgb(var(--rgb-navy) / 0.55);
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: color 0.3s ease, gap 0.3s ease;
+}
+.svc-row:hover .svc-cta { color: rgb(var(--rgb-red-deep)); gap: 0.7rem; }
+.svc-blurb {
+  grid-column: 2 / -1;
+  max-width: 36rem;
+  font-size: 0.9rem; color: rgb(var(--rgb-muted)); line-height: 1.55;
+  max-height: 0; opacity: 0; overflow: hidden;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease, padding-top 0.4s ease;
+  padding-top: 0;
+}
+.svc-row:hover .svc-blurb { max-height: 6rem; opacity: 1; padding-top: 0.8rem; }
+
+/* The sticky image preview that swaps on hover (desktop only) */
+.svc-preview {
+  position: relative; overflow: hidden; border-radius: var(--radius-xl);
+  background: rgb(var(--rgb-navy));
+  aspect-ratio: 4 / 5;
+}
+.svc-preview .svc-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.04); transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.svc-preview .svc-img.is-active { opacity: 1; transform: scale(1); }
+.svc-preview::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgb(8 8 8 / 0.4) 100%); pointer-events: none;
+}
+.svc-preview-label {
+  position: absolute; left: 1.25rem; bottom: 1.25rem; z-index: 2;
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #fff;
+  padding: 0.4rem 0.8rem; border-radius: 999px;
+  background: rgb(255 255 255 / 0.12); backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+/* ════════ MARQUEE (animated brand strip) — already had .marquee/.marquee-track ════════ */
+/* Lighten/refine the existing marquee for the brand row */
+.marquee-row { padding: 1.5rem 0; }
+.marquee-tile {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; width: 180px; height: 64px; padding: 0 1rem;
+}
+.marquee-tile img {
+  max-height: 38px; max-width: 100%; width: auto; object-fit: contain;
+  filter: grayscale(1) brightness(0.4); opacity: 0.75;
+  transition: filter 0.45s ease, opacity 0.45s ease;
+}
+.marquee-tile:hover img { filter: grayscale(0) brightness(1); opacity: 1; }
+.marquee-tile-sep { width: 6px; height: 6px; border-radius: 999px; background: rgb(var(--rgb-navy) / 0.2); flex-shrink: 0; }
+
+/* ════════ SCROLL PROGRESS BAR (top of viewport) ════════ */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: rgb(var(--rgb-red)); z-index: 60;
+  transition: width 0.06s linear;
+  box-shadow: 0 0 12px rgb(var(--rgb-red) / 0.55);
+}
+
+/* Subtler card hover for editorial vibes — keep grids quiet */
+.card:hover, .card-feature:hover { transform: translateY(-2px); }
+.service-card:hover { transform: translateY(-3px); }

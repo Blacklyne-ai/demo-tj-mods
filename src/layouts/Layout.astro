@@ -74,6 +74,7 @@ const ogImageUrl = new URL(ogImage, site.url).toString();
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <Header current={current} />
     <main id="main">
       <slot />
@@ -128,7 +129,7 @@ const ogImageUrl = new URL(ogImage, site.url).toString();
       );
       document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => countIO.observe(el));
 
-      // Cursor-tracking orange glow on dark navy cards
+      // Cursor-tracking red glow on dark charcoal cards
       if (!reduce) {
         document.querySelectorAll('.card-navy').forEach((card) => {
           card.addEventListener('mousemove', (e) => {
@@ -138,6 +139,23 @@ const ogImageUrl = new URL(ogImage, site.url).toString();
             (card as HTMLElement).style.setProperty('--my', ((ev.clientY - rect.top) / rect.height) * 100 + '%');
           });
         });
+      }
+
+      // Scroll-progress bar (top of viewport)
+      const bar = document.getElementById('scroll-progress');
+      if (bar) {
+        let ticking = false;
+        const update = () => {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+          bar.style.width = pct + '%';
+          ticking = false;
+        };
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(update); ticking = true; }
+        }, { passive: true });
+        update();
       }
     </script>
 

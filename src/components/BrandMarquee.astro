@@ -1,0 +1,25 @@
+---
+// Animated, infinite-scrolling brand marquee — replaces the static brand grid.
+// Two copies of the row sit side-by-side, the track translates -50% → seamless loop.
+import { brands } from '../data/brands';
+---
+<section class="py-14 md:py-16 section-snow overflow-hidden">
+  <div class="container-mcp">
+    <div class="flex items-baseline justify-between flex-wrap gap-3 mb-6">
+      <p class="section-eyebrow !mb-0"><span class="section-eyebrow-num">§</span> Brand-partner accredited</p>
+      <p class="text-sm text-muted font-mono">{brands.length} world-class film &amp; system suppliers</p>
+    </div>
+  </div>
+  <div class="marquee" aria-label="Brand partners">
+    <div class="marquee-track marquee-row">
+      {[...brands, ...brands].map((b, i) => (
+        <Fragment>
+          <span class="marquee-tile" title={b.blurb}>
+            <img src={b.logo} alt={b.name} loading="lazy" />
+          </span>
+          <span class="marquee-tile-sep" aria-hidden="true"></span>
+        </Fragment>
+      ))}
+    </div>
+  </div>
+</section>
