@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { height?: string; }
+const { height = 'h-[420px]' } = Astro.props;
+---
+<div class="relative rounded-3xl overflow-hidden border border-line shadow-soft">
+  <iframe
+    src={site.address.mapsEmbed}
+    title={`Map showing ${site.name} at ${site.address.street}, ${site.address.area} ${site.address.postcode}`}
+    class={`w-full ${height} grayscale-[0.2]`}
+    style="border:0;"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+  ></iframe>
+  <div class="absolute left-4 right-4 bottom-4 md:left-5 md:bottom-5 md:right-auto md:max-w-sm">
+    <div class="glass-light rounded-2xl p-4 md:p-5 shadow-lift">
+      <p class="text-[0.7rem] uppercase tracking-[0.16em] font-mono text-red-deep mb-1.5">TJ Mods · Proper Mods Ltd</p>
+      <p class="font-display font-bold text-navy text-lg leading-tight">{site.address.street}</p>
+      <p class="text-muted text-sm">{site.address.area}, {site.address.city} {site.address.postcode}</p>
+      <a href={site.address.directionsUrl} target="_blank" rel="noopener" class="btn btn-navy btn-sm mt-3.5">
+        <Icon name="Navigation" size={14} strokeWidth={2.3} /> Get directions
+      </a>
+    </div>
+  </div>
+</div>

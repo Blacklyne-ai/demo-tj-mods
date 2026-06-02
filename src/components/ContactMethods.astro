@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import { site, telLink, mailLink, whatsappLink } from '../data/site';
+interface Props { columns?: 2 | 4; }
+const { columns = 4 } = Astro.props;
+const methods = [
+  { icon: 'Phone', label: 'Call us', value: site.phoneDisplay, href: telLink, sub: 'Mon - Sat, 9am - 5pm', cls: 'tile-icon-red' },
+  { icon: 'MessageCircle', label: 'WhatsApp', value: 'Message us', href: whatsappLink, sub: 'Quick quotes & bookings', cls: 'tile-icon-wa', ext: true },
+  { icon: 'Mail', label: 'Email', value: site.email, href: mailLink, sub: 'We reply fast', cls: '' },
+  { icon: 'MapPin', label: 'Visit the garage', value: `${site.address.street}, ${site.address.area}`, href: site.address.directionsUrl, sub: `${site.address.postcode} · Get directions`, cls: '', ext: true },
+];
+---
+<div class={`grid gap-4 ${columns === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'}`}>
+  {methods.map((m, i) => (
+    <a
+      href={m.href}
+      target={m.ext ? '_blank' : undefined}
+      rel={m.ext ? 'noopener' : undefined}
+      class={`tile group fade-in stagger-${(i % 4) + 1}`}
+    >
+      <span class={`tile-icon ${m.cls}`}><Icon name={m.icon} size={22} strokeWidth={2} /></span>
+      <span class="text-[0.72rem] uppercase tracking-[0.14em] font-mono text-muted">{m.label}</span>
+      <span class="font-display font-bold text-navy text-lg leading-tight break-words">{m.value}</span>
+      <span class="text-sm text-muted">{m.sub}</span>
+    </a>
+  ))}
+</div>
+<style>
+  .tile-icon-wa { background: linear-gradient(180deg,#2BD37F,#1FA968) !important; color: #fff !important; border-color: rgb(255 255 255 / 0.2) !important; }
+</style>

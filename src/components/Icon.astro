@@ -1,0 +1,41 @@
+---
+// Central Lucide icon map (uses @lucide/astro 1.16 — named imports).
+// Data files reference icons by name; every icon used site-wide is here.
+// Brand/social logos are NOT here — Lucide has none; use inline SVG.
+import {
+  Sun, Paintbrush2, PaintBucket, ShieldCheck, Radar, Volume2, Speaker,
+  Lightbulb, Lock, Shield, Siren, Zap, Award, BadgeCheck, Gauge,
+  CircleCheck, Check, CheckCheck, Headphones, Phone, PhoneCall, Mail,
+  MessageCircle, MapPin, MapPinned, Navigation, Clock, CalendarDays,
+  Star, ArrowRight, ArrowUpRight, ArrowLeft, ArrowDown, ChevronRight,
+  ChevronDown, ChevronUp, ChevronLeft, Menu, X, Plus, Minus,
+  Sparkles, Sparkle, Gem, Wrench, Car, CarFront, Camera, Image as ImageIcon,
+  Eye, Snowflake, Wind, ThumbsUp, Users, UsersRound, Quote, Send,
+  ExternalLink, Info, Cookie, Layers, Palette, Droplets, Wallet, Tag,
+} from '@lucide/astro';
+
+const MAP: Record<string, any> = {
+  Sun, Paintbrush2, PaintBucket, ShieldCheck, Radar, Volume2, Speaker,
+  Lightbulb, Lock, Shield, Siren, Zap, Award, BadgeCheck, Gauge,
+  CircleCheck, Check, CheckCheck, Headphones, Phone, PhoneCall, Mail,
+  MessageCircle, MapPin, MapPinned, Navigation, Clock, CalendarDays,
+  Star, ArrowRight, ArrowUpRight, ArrowLeft, ArrowDown, ChevronRight,
+  ChevronDown, ChevronUp, ChevronLeft, Menu, X, Plus, Minus,
+  Sparkles, Sparkle, Gem, Wrench, Car, CarFront, Camera, Image: ImageIcon,
+  Eye, Snowflake, Wind, ThumbsUp, Users, UsersRound, Quote, Send,
+  ExternalLink, Info, Cookie, Layers, Palette, Droplets, Wallet, Tag,
+  // aliases for names used in data / brief
+  CheckCircle: CircleCheck,
+  HeadphonesIcon: Headphones,
+};
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+  strokeWidth?: number;
+}
+const { name, size = 24, class: className = '', strokeWidth = 1.75 } = Astro.props;
+const Cmp = MAP[name] ?? CircleCheck;
+---
+<Cmp size={size} class={className} stroke-width={strokeWidth} />

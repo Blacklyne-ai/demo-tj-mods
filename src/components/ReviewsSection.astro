@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { reviews } from '../data/reviews';
+import { site } from '../data/site';
+
+const trust = [
+  { icon: 'Award', value: `${site.stats.yearsExperience}+ years`, label: 'Modifying cars in East London' },
+  { icon: 'BadgeCheck', value: '8 brand partners', label: 'Fully accredited installs' },
+  { icon: 'Car', value: 'Mercedes to Aston', label: 'The range of cars we work on' },
+];
+---
+<section class="py-16 md:py-24">
+  <div class="container-mcp">
+    <SectionHeading eyebrow="Trusted by London drivers" title="Why people love our team?" align="center" />
+
+    {reviews.mode === 'live' && reviews.googleReviews.length > 0 ? (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+        {reviews.googleReviews.slice(0, 5).map((r) => (
+          <figure class="card-feature">
+            <div class="stars mb-3" aria-label={`${r.rating} out of 5 stars`}>
+              {Array.from({ length: r.rating }).map(() => <Icon name="Star" size={16} strokeWidth={2} />)}
+            </div>
+            <blockquote class="text-navy leading-relaxed mb-4">{r.text}</blockquote>
+            <figcaption class="text-sm text-muted font-medium">{r.author}{r.relativeTime ? ` · ${r.relativeTime}` : ''}</figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="max-w-2xl mx-auto mt-12 fade-in">
+        <div class="card-feature text-center">
+          <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-line shadow-soft mb-5 mx-auto">
+            <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.2-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.55-5.17 3.55-8.87Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.94-2.91l-3.88-3c-1.08.72-2.45 1.16-4.06 1.16-3.12 0-5.77-2.11-6.71-4.95H1.28v3.09A12 12 0 0 0 12 24Z"/><path fill="#FBBC05" d="M5.29 14.3a7.2 7.2 0 0 1 0-4.6V6.61H1.28a12 12 0 0 0 0 10.78l4.01-3.09Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.43-3.43A11.97 11.97 0 0 0 12 0 12 12 0 0 0 1.28 6.61l4.01 3.09C6.23 6.86 8.88 4.75 12 4.75Z"/></svg>
+          </span>
+          <h3 class="heading-md mb-3">Rated by our customers on Google</h3>
+          <p class="text-muted leading-relaxed mb-6">{reviews.placeholderNote}</p>
+          <a href={site.googleProfileUrl} target="_blank" rel="noopener" class="btn btn-navy btn-lg">
+            <Icon name="Star" size={16} strokeWidth={2.2} /> Read &amp; leave a Google review
+          </a>
+        </div>
+      </div>
+    )}
+
+    <div class="grid sm:grid-cols-3 gap-5 mt-8 max-w-4xl mx-auto">
+      {trust.map((t, i) => (
+        <div class={`tile items-center text-center fade-in stagger-${i + 1}`}>
+          <span class="tile-icon tile-icon-red self-center"><Icon name={t.icon} size={20} strokeWidth={2} /></span>
+          <span class="font-display font-extrabold text-navy text-xl">{t.value}</span>
+          <span class="text-sm text-muted">{t.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

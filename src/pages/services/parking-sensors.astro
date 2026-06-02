@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import { serviceBySlug } from '../../data/services';
+const service = serviceBySlug('parking-sensors')!;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.name,
+  serviceType: service.name,
+  description: service.short,
+  provider: { '@type': 'AutoRepair', name: 'TJ Mods', '@id': 'https://demo-tj-mods.pages.dev/#business' },
+  areaServed: ['Ilford', 'East London', 'London'],
+  url: `https://demo-tj-mods.pages.dev/services/parking-sensors`,
+};
+---
+<Layout title={service.metaTitle} description={service.metaDescription} current="/services" ogImage={service.feature} schema={schema}>
+  <ServiceDetail service={service} />
+</Layout>

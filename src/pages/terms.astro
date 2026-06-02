@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLink, mailLink } from '../data/site';
+
+const title = 'Terms of Service | TJ Mods (Proper Mods Ltd) East London';
+const description =
+  'The terms on which TJ Mods (Proper Mods Ltd) provides its car modification services and this website. Quotations confirmed after inspection.';
+const lastUpdated = '02/06/2026';
+---
+<Layout title={title} description={description} current="/terms">
+  <PageHero
+    eyebrow="Legal"
+    title="Terms of Service"
+    subtitle="The terms on which we provide our services and this website. Please read them carefully."
+    crumb="Terms of Service"
+  />
+
+  <section class="py-16 md:py-24">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p class="mono text-[0.82rem] uppercase tracking-wider text-muted">Last updated: {lastUpdated}</p>
+
+        <h2>1. Acceptance of these terms</h2>
+        <p>
+          These Terms of Service ("Terms") govern your use of this website and the basis on which we provide our services.
+          By using this website or enquiring about or booking our services, you agree to these Terms. If you do not agree
+          with them, please do not use the site or our services.
+        </p>
+
+        <h2>2. About us</h2>
+        <p>
+          This website and our services are provided by <strong>{site.legalName}</strong>, trading as
+          <strong>{site.name}</strong> ("we", "us", "our"), a car modification studio based at {site.address.street},
+          {site.address.area}, {site.address.city} {site.address.postcode}, United Kingdom. You can reach us by phone on
+          <a href={telLink}>{site.phoneDisplay}</a> or by email at <a href={mailLink}>{site.email}</a>.
+        </p>
+
+        <h2>3. Our services</h2>
+        <p>
+          We offer vehicle modification services including window tinting, car wrapping, paint protection film, parking
+          sensors, car audio, lighting upgrades and vehicle security. The descriptions on this website are provided for
+          general information only. All work is <strong>subject to an initial consultation, inspection of your vehicle and a
+          written quotation</strong> before it is agreed and carried out. We will discuss your requirements with you and
+          recommend the most suitable option for your vehicle.
+        </p>
+
+        <h2>4. Quotations and prices</h2>
+        <p>
+          Any prices or estimates we mention - whether on this website, by phone or by message - are
+          <strong>indicative only</strong> until confirmed in a written quotation. A quotation is based on the information
+          available to us and the condition of your vehicle at the time. Once you accept a written quotation and we confirm
+          your booking, that becomes the agreed price for the work described. If the scope of work changes, or additional
+          work is needed once we inspect the vehicle, we will discuss this and agree any revised price with you before
+          proceeding.
+        </p>
+
+        <h2>5. Bookings and cancellations</h2>
+        <p>
+          Bookings are confirmed once we have agreed a date and the work to be done. If you need to change or cancel a
+          booking, please let us know as early as possible so we can offer the slot to another customer. We may ask for a
+          deposit for certain work; where we do, the terms of that deposit will be made clear at the time of booking.
+        </p>
+
+        <h2>6. Your responsibilities</h2>
+        <p>To help us carry out the work safely and correctly, you agree to:</p>
+        <ul>
+          <li>provide accurate and complete information about yourself and your vehicle;</li>
+          <li>ensure you are the owner of the vehicle, or are authorised by the owner to commission the work;</li>
+          <li>provide relevant vehicle documentation where we reasonably request it;</li>
+          <li>remove personal belongings and valuables from the vehicle before it is left with us; and</li>
+          <li>make us aware of any existing damage, defects or modifications relevant to the work.</li>
+        </ul>
+
+        <h2>7. Workmanship and aftercare</h2>
+        <p>
+          We carry out our work with reasonable care and skill. Films, wraps and other products are fitted and cared for in
+          line with the relevant manufacturer's and film supplier's guidance. To keep your modification looking its best, we
+          will provide aftercare advice (for example, recommended periods before washing a freshly applied film or wrap).
+          Following this guidance is important - failure to do so may affect the finish and any product or workmanship cover
+          that applies.
+        </p>
+
+        <h2>8. Liability</h2>
+        <p>
+          To the fullest extent permitted by law, we are not liable for any loss or damage that is not a foreseeable result
+          of our breach of these Terms, for business losses, or for the condition of pre-existing paintwork, glass, trim or
+          components that are affected by their prior state rather than by our work.
+        </p>
+        <p>
+          <strong>Nothing in these Terms limits or excludes our liability where it would be unlawful to do so.</strong> This
+          includes liability for death or personal injury caused by our negligence, for fraud or fraudulent
+          misrepresentation, and any other liability that cannot be limited or excluded under the laws of England and Wales.
+          Your statutory rights as a consumer are not affected by these Terms.
+        </p>
+
+        <h2>9. Intellectual property</h2>
+        <p>
+          The content of this website - including text, design, graphics, logos and images - is owned by or licensed to
+          {site.legalName} and is protected by intellectual property laws. You may view and print pages for your own
+          personal, non-commercial use. You may not reproduce, distribute or otherwise use any content for commercial
+          purposes without our prior written permission.
+        </p>
+
+        <h2>10. Third-party links</h2>
+        <p>
+          This website may contain links to third-party websites and services (such as Google Maps, WhatsApp and our social
+          media profiles) for your convenience. We do not control these third parties and are not responsible for their
+          content, availability or practices. Following any external link is at your own risk and subject to that third
+          party's own terms and policies.
+        </p>
+
+        <h2>11. Privacy and cookies</h2>
+        <p>
+          Our use of your personal data and cookies is explained in our <a href="/privacy-policy">Privacy Policy</a> and
+          <a href="/cookie-policy">Cookie Policy</a>, which form part of these Terms.
+        </p>
+
+        <h2>12. Governing law</h2>
+        <p>
+          These Terms, and any dispute or claim arising out of or in connection with them, are governed by the laws of
+          <strong>England and Wales</strong>, and are subject to the exclusive jurisdiction of the courts of England and
+          Wales.
+        </p>
+
+        <h2>13. Changes to these terms</h2>
+        <p>
+          We may update these Terms from time to time. The version published on this page, with its "Last updated" date,
+          is the version that applies. We recommend you review this page periodically.
+        </p>
+
+        <h2>14. Contact us</h2>
+        <p>
+          If you have any questions about these Terms, please contact <strong>{site.legalName}</strong> (trading as
+          {site.name}) at {site.address.street}, {site.address.area}, {site.address.city} {site.address.postcode}, by email
+          at <a href={mailLink}>{site.email}</a>, or by phone on <a href={telLink}>{site.phoneDisplay}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Talk to us about your project"
+    text="The best way to get an accurate price is a quick chat and a look at your car. Call, message us on WhatsApp, or visit our Ilford studio for a no-obligation quote."
+  />
+</Layout>

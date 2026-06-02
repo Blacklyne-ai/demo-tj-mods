@@ -1,0 +1,39 @@
+---
+import { site, telLink, whatsappLink } from '../data/site';
+import Icon from './Icon.astro';
+---
+<!-- Mobile sticky action bar — critical for booking enquiries -->
+<div class="floating-mobile" role="region" aria-label="Quick contact">
+  <a href={telLink} class="fm-btn fm-call" aria-label={`Call TJ Mods on ${site.phoneDisplay}`}>
+    <Icon name="Phone" size={17} strokeWidth={2.3} />
+    <span>Call now</span>
+  </a>
+  <a href={whatsappLink} target="_blank" rel="noopener" class="fm-btn fm-wa" aria-label="Message TJ Mods on WhatsApp">
+    <Icon name="MessageCircle" size={17} strokeWidth={2.3} />
+    <span>WhatsApp</span>
+  </a>
+  <a href={site.address.directionsUrl} target="_blank" rel="noopener" class="fm-btn fm-dir" aria-label="Get directions to TJ Mods">
+    <Icon name="Navigation" size={17} strokeWidth={2.3} />
+    <span>Directions</span>
+  </a>
+</div>
+
+<style>
+  .floating-mobile {
+    position: fixed; left: 0.6rem; right: 0.6rem; bottom: 0.6rem; z-index: 40;
+    gap: 0.45rem; padding: 0.45rem;
+    border-radius: 999px; background: rgba(255,255,255,0.86);
+    backdrop-filter: blur(20px) saturate(170%); -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid rgba(15,15,15,0.08);
+    box-shadow: 0 -2px 8px rgba(8,8,8,0.05), 0 14px 36px -10px rgba(8,8,8,0.35), inset 0 1px 0 0 rgba(255,255,255,0.7);
+  }
+  .fm-btn {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    padding: 0.62rem 0.4rem; border-radius: 999px; font-weight: 600; font-size: 0.82rem;
+    color: #fff; transition: transform 0.2s ease; line-height: 1;
+  }
+  .fm-btn:active { transform: scale(0.96); }
+  .fm-call { background: linear-gradient(180deg,#E63946,#D71E28); }
+  .fm-wa { background: linear-gradient(180deg,#2BD37F,#1FA968); }
+  .fm-dir { background: linear-gradient(180deg,#262626,#0F0F0F); }
+</style>

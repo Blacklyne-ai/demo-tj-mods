@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { site, telLink, mailLink } from '../data/site';
+
+const title = 'Privacy Policy | TJ Mods (Proper Mods Ltd) East London';
+const description =
+  'How TJ Mods (Proper Mods Ltd) handles your data under UK GDPR. This static site has no backend; enquiries open your own email or WhatsApp.';
+const lastUpdated = '02/06/2026';
+---
+<Layout title={title} description={description} current="/privacy-policy">
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy Policy"
+    subtitle="How we look after your personal data, and the rights you have under UK data protection law."
+    crumb="Privacy Policy"
+  />
+
+  <section class="py-16 md:py-24">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p class="mono text-[0.82rem] uppercase tracking-wider text-muted">Last updated: {lastUpdated}</p>
+
+        <h2>1. Who we are</h2>
+        <p>
+          This website is operated by <strong>{site.legalName}</strong>, which trades as
+          <strong>{site.name}</strong> ("we", "us", "our"). We are a car modification studio based at
+          {site.address.street}, {site.address.area}, {site.address.city} {site.address.postcode}, United Kingdom.
+        </p>
+        <p>
+          For the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018,
+          {site.legalName} is the data controller responsible for your personal data. If you have any questions about
+          this policy or how we handle your information, you can contact us using the details in the
+          <a href="#contact">Contact us</a> section below.
+        </p>
+
+        <h2>2. The personal data we collect</h2>
+        <p>
+          We are a small studio and we keep data collection to a minimum. The personal data we handle is limited to the
+          details you choose to share with us when you get in touch to make an enquiry or book a service. This may include:
+        </p>
+        <ul>
+          <li>your name;</li>
+          <li>your contact details (telephone number, email address or WhatsApp number);</li>
+          <li>details about your vehicle (such as make, model and the work you are interested in); and</li>
+          <li>any other information you include in your message to us.</li>
+        </ul>
+        <p>
+          We do not ask for, and we ask that you do not send us, special category data (such as health information) or
+          payment card details by email or messaging app.
+        </p>
+
+        <h2>3. How this website works (no backend)</h2>
+        <p>
+          This is a static brochure website. It has <strong>no backend, database or server-side processing of its own</strong>.
+          The enquiry form on this site does not transmit or store your details on the website. Instead, when you complete
+          the form it composes a message and opens it in your <strong>own email application or WhatsApp</strong>, ready for
+          you to review and send to us. Nothing is submitted until you choose to send that message yourself.
+        </p>
+        <p>
+          This means that any personal data you provide reaches us only through ordinary channels you control - your email
+          provider, your phone, or WhatsApp - and we receive it in the same way as any other enquiry sent to our published
+          phone number or email address.
+        </p>
+
+        <h2>4. How we use your data, and our lawful bases</h2>
+        <p>
+          We use the information you give us to respond to your enquiry, provide a quotation, arrange and carry out the
+          services you ask for, and keep in touch with you about your booking. Under UK GDPR we rely on the following
+          lawful bases:
+        </p>
+        <ul>
+          <li>
+            <strong>Consent</strong> - when you contact us voluntarily by phone, email, WhatsApp or the on-site form, you
+            consent to us using your details to reply. You may withdraw your consent at any time.
+          </li>
+          <li>
+            <strong>Legitimate interests</strong> - to respond to enquiries, run our studio and communicate with people who
+            contact us, in a way you would reasonably expect and that does not override your rights.
+          </li>
+          <li>
+            <strong>Performance of a contract</strong> - where you go on to book a service, to take the steps necessary to
+            provide that service to you.
+          </li>
+        </ul>
+
+        <h2>5. Third parties</h2>
+        <p>
+          We do not sell your personal data, and we do not share it for marketing. A small number of third-party services
+          support this website:
+        </p>
+        <ul>
+          <li>
+            <strong>Google Maps</strong> - we embed a Google map so you can find our Ilford studio. When the map loads,
+            Google may set cookies and process limited technical data such as your IP address, in line with
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.
+          </li>
+          <li>
+            <strong>Web hosting</strong> - our hosting provider may keep standard server logs (such as IP addresses and
+            timestamps) for security and to keep the site running reliably.
+          </li>
+          <li>
+            <strong>Analytics</strong> - we may use privacy-respecting website analytics, but only where you have given your
+            consent. You can read more in our <a href="/cookie-policy">Cookie Policy</a>.
+          </li>
+        </ul>
+
+        <h2>6. How long we keep your data</h2>
+        <p>
+          Because the website does not store enquiries, retention applies only to the messages you send us directly. We keep
+          enquiry correspondence for no longer than is necessary - typically while we are dealing with your enquiry or
+          booking, and for a reasonable period afterwards to handle any follow-up, aftercare or our legal and accounting
+          obligations. After that, we securely delete or anonymise it.
+        </p>
+
+        <h2>7. Your rights under UK GDPR</h2>
+        <p>You have the following rights in relation to your personal data:</p>
+        <ul>
+          <li>the right to be informed about how your data is used;</li>
+          <li>the right of access to the personal data we hold about you;</li>
+          <li>the right to rectification of inaccurate or incomplete data;</li>
+          <li>the right to erasure (the "right to be forgotten");</li>
+          <li>the right to restrict processing;</li>
+          <li>the right to object to processing based on legitimate interests;</li>
+          <li>the right to data portability; and</li>
+          <li>where processing is based on consent, the right to withdraw that consent at any time.</li>
+        </ul>
+        <p>
+          To exercise any of these rights, please contact us using the details below. If you are concerned about how we have
+          handled your data, you also have the right to lodge a complaint with the UK's supervisory authority, the
+          Information Commissioner's Office (ICO), at
+          <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a>. We would, however, appreciate the
+          chance to put things right first.
+        </p>
+
+        <h2>8. Security</h2>
+        <p>
+          We take appropriate technical and organisational measures to protect personal data against unauthorised access,
+          loss or misuse. This website is served over a secure (HTTPS) connection. Please remember that no method of
+          transmission over the internet - including email and messaging apps - is completely secure, so any information you
+          send is at your own risk until it reaches us.
+        </p>
+
+        <h2>9. Children</h2>
+        <p>
+          Our services and this website are intended for adults and are not directed at children. We do not knowingly
+          collect personal data from children under 16. If you believe a child has provided us with personal data, please
+          contact us so we can remove it.
+        </p>
+
+        <h2>10. Changes to this policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time to reflect changes in our practices or the law. Any changes
+          will be posted on this page with a revised "Last updated" date. Please check back periodically.
+        </p>
+
+        <h2 id="contact">11. Contact us</h2>
+        <p>
+          If you have any questions about this Privacy Policy or wish to exercise your rights, please get in touch:
+        </p>
+        <ul>
+          <li><strong>{site.legalName}</strong> (trading as {site.name})</li>
+          <li>{site.address.street}, {site.address.area}, {site.address.city} {site.address.postcode}</li>
+          <li>Email: <a href={mailLink}>{site.email}</a></li>
+          <li>Telephone: <a href={telLink}>{site.phoneDisplay}</a></li>
+        </ul>
+        <p>
+          See also our <a href="/cookie-policy">Cookie Policy</a> and
+          <a href="/terms">Terms of Service</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-snow py-12 md:py-16">
+    <div class="container-narrow">
+      <div class="card-feature flex flex-col sm:flex-row sm:items-center justify-between gap-6 fade-in">
+        <div>
+          <span class="eyebrow mb-3">Questions about your data?</span>
+          <h2 class="heading-md text-balance">We are happy to help</h2>
+          <p class="text-muted mt-2 text-pretty">Call us or send an email and we will respond as quickly as we can.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+          <a href={telLink} class="btn btn-primary"><Icon name="Phone" size={16} strokeWidth={2.3} /> {site.phoneDisplay}</a>
+          <a href={mailLink} class="btn btn-outline"><Icon name="Mail" size={16} strokeWidth={2.1} /> Email us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

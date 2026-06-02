@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import BrandStrip from '../../components/BrandStrip.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { services } from '../../data/services';
+import { process as steps } from '../../data/content';
+import { site, telLink } from '../../data/site';
+
+const title = 'Our Services | TJ Mods Car Modification East London | 7 Specialisms';
+const description =
+  'All 7 TJ Mods services in Ilford - window tinting, wrapping, PPF, parking sensors, audio, LED lighting & security. Call 0208 478 7327.';
+---
+<Layout title={title} description={description} current="/services">
+  <PageHero
+    eyebrow="Our services"
+    title="Seven specialisms, one trusted garage"
+    subtitle="Window tinting, wrapping, paint protection film, parking sensors, audio, lighting and security - every modification fitted by an experienced team and backed by premium brand partners, all under one roof in Ilford."
+    image="/images/services/service1.png"
+    crumb="Services"
+    primary={{ href: '/contact-us', label: 'Book your visit Now' }}
+    secondary={{ href: telLink, label: `Call ${site.phoneDisplay}` }}
+  />
+
+  <!-- Intro + the 7 services -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Everything your car needs, under one roof"
+        intro="We've spent over 15 years modifying cars in East London - from a Mercedes Benz through to an Aston Martin. Explore our seven specialist services below, or get in touch and we'll talk you through the right option for your car and budget."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mt-12">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+        <!-- 8th tile keeps the grid symmetric + adds a clear CTA -->
+        <a href="/contact-us" class="card-navy flex flex-col justify-between fade-in" style="min-height: 100%;">
+          <div>
+            <span class="tile-icon tile-icon-red mb-4"><Icon name="MessageCircle" size={22} strokeWidth={2} /></span>
+            <h3 class="font-display font-bold text-white text-xl mb-2">Not sure what you need?</h3>
+            <p class="text-white/65 text-[0.93rem] leading-relaxed">Tell us about your car and budget - we'll talk you through the options. No obligation.</p>
+          </div>
+          <span class="arrow-link arrow-link-light mt-6 self-start text-[0.92rem]">Get a free quote <Icon name="ArrowRight" size={15} strokeWidth={2.4} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-16 md:py-24 section-snow">
+    <div class="container-mcp">
+      <SectionHeading eyebrow="How it works" title="From enquiry to drive-away" align="center" />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+        {steps.map((s, i) => (
+          <div class={`relative fade-in stagger-${(i % 4) + 1}`}>
+            <span class="font-mono text-5xl font-bold text-red/15">{s.step}</span>
+            <h3 class="font-display font-bold text-navy text-lg mt-2 mb-2">{s.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand partnerships -->
+  <BrandStrip />
+
+  <CtaBand />
+</Layout>

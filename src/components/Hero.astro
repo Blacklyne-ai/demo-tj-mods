@@ -1,0 +1,151 @@
+---
+import Icon from './Icon.astro';
+import { heroSlides, trustSignals } from '../data/content';
+import { telLink, site } from '../data/site';
+---
+<section id="hero" class="relative overflow-hidden bg-navy-deep" aria-roledescription="carousel" aria-label="Featured services">
+  <!-- Slides -->
+  <div class="absolute inset-0">
+    {heroSlides.map((s, i) => (
+      <div class={`hero-slide ${i === 0 ? 'is-active' : ''}`} data-slide={i} aria-hidden={i !== 0}>
+        <img src={s.image} alt="" aria-hidden="true" class="hero-img" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} width="1600" height="900" />
+        <div class="absolute inset-0 hero-overlay"></div>
+      </div>
+    ))}
+    <div class="absolute inset-0 hero-mesh opacity-60"></div>
+  </div>
+
+  <div class="container-mcp relative z-10 min-h-[100svh] flex flex-col justify-center pt-28 pb-28 md:pt-32 md:pb-24">
+    <!-- Text layers (synced with active slide) -->
+    <div class="max-w-3xl">
+      {heroSlides.map((s, i) => (
+        <div class={`hero-text ${i === 0 ? 'is-active' : ''}`} data-text={i}>
+          <span class="eyebrow eyebrow-light mb-5">{s.eyebrow}</span>
+          {i === 0
+            ? <h1 class="hero-h1 text-white text-balance hero-text-shadow">{s.title}</h1>
+            : <p class="hero-h1 text-white text-balance hero-text-shadow">{s.title}</p>}
+          <p class="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mt-6 text-pretty hero-text-shadow">{s.lead}</p>
+          <div class="flex flex-col sm:flex-row gap-3 mt-9">
+            <a href={s.ctaHref} class="btn btn-primary btn-lg">
+              {s.ctaLabel}
+              <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+            </a>
+            <a href={telLink} class="btn btn-glass btn-lg">
+              <Icon name="Phone" size={16} strokeWidth={2.3} />
+              {site.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-4 mt-12 md:mt-16">
+      <button id="hero-prev" class="hero-arrow" aria-label="Previous slide"><Icon name="ArrowLeft" size={18} strokeWidth={2.4} /></button>
+      <div class="flex items-center gap-2" role="tablist" aria-label="Choose slide">
+        {heroSlides.map((s, i) => (
+          <button class={`hero-dot ${i === 0 ? 'is-active' : ''}`} data-dot={i} role="tab" aria-label={s.title} aria-selected={i === 0}></button>
+        ))}
+      </div>
+      <button id="hero-next" class="hero-arrow" aria-label="Next slide"><Icon name="ArrowRight" size={18} strokeWidth={2.4} /></button>
+      <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 font-mono text-xs text-white/55">
+        <span id="hero-index" class="text-white/90">01</span> / {String(heroSlides.length).padStart(2, '0')}
+      </span>
+    </div>
+
+    <!-- Trust chips -->
+    <ul class="flex flex-wrap gap-x-5 gap-y-2 mt-10 md:mt-12">
+      {trustSignals.map((t) => (
+        <li class="inline-flex items-center gap-2 text-white/75 text-[0.82rem] font-medium">
+          <Icon name="CircleCheck" size={16} strokeWidth={2} class="text-red-bright" />
+          {t}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- 15-year heritage badge -->
+  <div class="hero-badge hidden md:flex" aria-hidden="true">
+    <span class="hb-num">15<span class="hb-plus">+</span></span>
+    <span class="hb-label">Years<br />Experience</span>
+  </div>
+</section>
+
+<style>
+  .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s cubic-bezier(0.4,0,0.2,1); }
+  .hero-slide.is-active { opacity: 1; }
+  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-slide.is-active .hero-img { animation: kenburns 9s ease-out forwards; }
+
+  .hero-h1 { font-size: clamp(2.5rem, 6.5vw, 5rem); font-weight: 900; line-height: 0.98; letter-spacing: -0.04em; font-family: var(--font-display); }
+
+  .hero-text { display: none; }
+  .hero-text.is-active { display: block; animation: heroIn 0.7s cubic-bezier(0.4,0,0.2,1) both; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+  .hero-arrow {
+    display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px;
+    color: #fff; background: rgb(255 255 255 / 0.1); border: 1px solid rgb(255 255 255 / 0.22);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: all 0.25s ease;
+  }
+  .hero-arrow:hover { background: linear-gradient(180deg,#E63946,#D71E28); border-color: rgb(255 255 255 / 0.3); transform: translateY(-2px); }
+
+  .hero-dot { width: 10px; height: 10px; border-radius: 999px; background: rgb(255 255 255 / 0.3); border: 0; cursor: pointer; transition: all 0.3s ease; padding: 0; }
+  .hero-dot:hover { background: rgb(255 255 255 / 0.6); }
+  .hero-dot.is-active { width: 30px; background: linear-gradient(90deg,#E63946,#D71E28); }
+
+  .hero-badge {
+    position: absolute; top: 6.5rem; right: 1.5rem; z-index: 10;
+    flex-direction: column; align-items: center; justify-content: center; gap: 0.1rem;
+    width: 116px; height: 116px; border-radius: 999px; text-align: center;
+    background: linear-gradient(150deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.05));
+    border: 1px solid rgb(255 255 255 / 0.28);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 14px 36px -12px rgb(4 4 4 / 0.6), inset 0 1px 0 0 rgb(255 255 255 / 0.3);
+  }
+  .hb-num { font-family: var(--font-display); font-weight: 900; font-size: 2.5rem; line-height: 1; color: #fff; letter-spacing: -0.04em; }
+  .hb-plus { color: #E63946; }
+  .hb-label { font-family: var(--font-mono); font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgb(255 255 255 / 0.85); line-height: 1.3; margin-top: 0.2rem; }
+  @media (min-width: 1280px) { .hero-badge { right: 3rem; width: 132px; height: 132px; } .hb-num { font-size: 2.9rem; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide.is-active .hero-img { animation: none; }
+    .hero-text.is-active { animation: none; }
+  }
+</style>
+
+<script>
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.hero-slide'));
+  const texts = Array.from(document.querySelectorAll<HTMLElement>('.hero-text'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.hero-dot'));
+  const idxEl = document.getElementById('hero-index');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = 0;
+  let timer: ReturnType<typeof setInterval> | null = null;
+  const n = slides.length;
+
+  function go(i: number) {
+    cur = (i + n) % n;
+    slides.forEach((s, k) => { s.classList.toggle('is-active', k === cur); s.setAttribute('aria-hidden', String(k !== cur)); });
+    texts.forEach((t, k) => t.classList.toggle('is-active', k === cur));
+    dots.forEach((d, k) => { d.classList.toggle('is-active', k === cur); d.setAttribute('aria-selected', String(k === cur)); });
+    if (idxEl) idxEl.textContent = String(cur + 1).padStart(2, '0');
+  }
+  function next() { go(cur + 1); }
+  function prev() { go(cur - 1); }
+  function start() { if (reduce || timer) return; timer = setInterval(next, 6000); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function reset() { stop(); start(); }
+
+  document.getElementById('hero-next')?.addEventListener('click', () => { next(); reset(); });
+  document.getElementById('hero-prev')?.addEventListener('click', () => { prev(); reset(); });
+  dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.dot)); reset(); }));
+
+  const hero = document.getElementById('hero');
+  hero?.addEventListener('mouseenter', stop);
+  hero?.addEventListener('mouseleave', start);
+  hero?.addEventListener('focusin', stop);
+  hero?.addEventListener('focusout', start);
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  start();
+</script>

@@ -1,0 +1,71 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+const rows = [
+  { day: 'Monday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Tuesday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Wednesday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Thursday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Friday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Saturday', value: '9:00am - 5:00pm', open: true },
+  { day: 'Sunday', value: 'Closed', open: false },
+];
+---
+<div class="card-feature">
+  <div class="flex items-center justify-between gap-4 mb-5">
+    <h3 class="heading-md flex items-center gap-2.5">
+      <span class="tile-icon tile-icon-red !w-10 !h-10"><Icon name="Clock" size={18} strokeWidth={2.2} /></span>
+      Opening hours
+    </h3>
+    <span class="status-chip-lg">
+      <span class="status-dot status-dot-closed js-dot"></span>
+      <span class="js-status-text">Hours</span>
+    </span>
+  </div>
+  <ul>
+    {rows.map((r) => (
+      <li class="oh-row" data-day={r.day}>
+        <span class="oh-day">{r.day}</span>
+        <span class={r.open ? 'oh-val' : 'oh-val oh-closed'}>{r.value}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="text-sm text-muted mt-5 flex items-start gap-2">
+    <Icon name="Info" size={15} strokeWidth={2} class="text-red-deep flex-shrink-0 mt-0.5" />
+    Telephone enquiries welcome during opening hours - call {site.phoneDisplay}.
+  </p>
+</div>
+
+<style>
+  .oh-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid rgb(var(--rgb-border)); }
+  .oh-row:last-child { border-bottom: 0; }
+  .oh-day { font-weight: 600; color: rgb(var(--rgb-navy)); }
+  .oh-val { font-family: var(--font-mono); font-size: 0.92rem; color: rgb(var(--rgb-muted)); }
+  .oh-closed { color: rgb(var(--rgb-red-deep)); font-weight: 600; }
+  .oh-row.is-today { background: rgb(var(--rgb-red) / 0.04); margin: 0 -0.75rem; padding-left: 0.75rem; padding-right: 0.75rem; border-radius: 8px; }
+  .oh-row.is-today .oh-day::after { content: 'Today'; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(var(--rgb-red-deep)); background: rgb(var(--rgb-red) / 0.1); padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 0.6rem; vertical-align: middle; }
+  .status-chip-lg { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; font-family: var(--font-mono); background: rgb(var(--rgb-navy) / 0.04); border: 1px solid rgb(var(--rgb-navy) / 0.1); color: rgb(var(--rgb-navy) / 0.8); white-space: nowrap; }
+</style>
+
+<script>
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  function update() {
+    const now = new Date();
+    const day = now.getDay();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const workday = day >= 1 && day <= 6;
+    const open = workday && mins >= 540 && mins < 1020;
+    let label: string;
+    if (open) label = 'Open now · Closes 5pm';
+    else if (workday && mins < 540) label = 'Closed · Opens 9am';
+    else {
+      let nd = (day + 1) % 7; for (let i = 0; i < 7 && !(nd >= 1 && nd <= 6); i++) nd = (nd + 1) % 7;
+      label = `Closed · Opens ${DAYS[nd]} 9am`;
+    }
+    document.querySelectorAll('.js-dot').forEach((d) => { d.className = 'status-dot js-dot ' + (open ? 'status-dot-open' : 'status-dot-closed'); });
+    document.querySelectorAll('.js-status-text').forEach((t) => { t.textContent = label; });
+    document.querySelectorAll<HTMLElement>('.oh-row').forEach((r) => r.classList.toggle('is-today', r.dataset.day === DAYS[day]));
+  }
+  update();
+  setInterval(update, 60000);
+</script>

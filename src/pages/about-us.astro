@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { services, usps } from '../data/services';
+import { whyChoose, stats } from '../data/content';
+import { site, telLink } from '../data/site';
+
+const title = 'About TJ Mods | 15+ Years Car Modification Specialists in East London';
+const description =
+  'TJ Mods (Proper Mods Ltd) has modified cars in East London for 15+ years - window tinting, wrapping, PPF, audio, security. Meet the team in Ilford.';
+
+// Small, balanced visual strip (3 images = clean row, no asymmetry).
+const aboutShots = [
+  { src: '/images/wrapping/matt-porsche.png', alt: 'Matte black wrapped Porsche by TJ Mods' },
+  { src: '/images/gallery/window-tinting/wt-7.jpg', alt: 'Finished window tinting work by TJ Mods' },
+  { src: '/images/wrapping/rose-gold-bmw.png', alt: 'Rose gold chrome wrapped BMW by TJ Mods' },
+];
+---
+<Layout title={title} description={description} current="/about-us">
+  <PageHero
+    eyebrow="About TJ Mods"
+    title="15+ years modifying cars in East London"
+    subtitle="A premium car-modification studio in Ilford, run by TJ and the team. From subtle window tints to full colour-change wraps, we've transformed cars of every kind - from a Mercedes Benz through to an Aston Martin."
+    image="/images/about/tj-wrapping.png"
+    crumb="About Us"
+    primary={{ href: '/contact-us', label: 'Book your visit Now' }}
+    secondary={{ href: telLink, label: `Call ${site.phoneDisplay}` }}
+  />
+
+  <!-- Our story -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="fade-in">
+        <span class="eyebrow mb-5">{whyChoose.eyebrow}</span>
+        <h2 class="heading-lg text-balance mb-6">Car modification specialists in Ilford since 2010</h2>
+        <p class="text-lg text-muted leading-relaxed mb-6 text-pretty">{whyChoose.body}</p>
+        <p class="text-muted leading-relaxed mb-6 text-pretty">
+          We've been modifying cars from our East London garage on {site.address.street} for over 15 years. Customers know us as TJ and the team - and over that time we've built a reputation for tidy, professional work and honest advice on every job that comes through the door.
+        </p>
+        <p class="text-muted leading-relaxed mb-8 text-pretty">
+          Whatever your car and whatever your budget, we'll talk you through the options before any work begins. Pop in to see our range of colours and films in person, or get in touch for a no-obligation quote.
+        </p>
+        <div class="flex flex-wrap gap-2.5">
+          <span class="pill pill-red"><Icon name="Award" size={14} strokeWidth={2.2} /> Fully accredited</span>
+          <span class="pill"><Icon name="MapPin" size={14} strokeWidth={2.2} /> {site.address.area}, East London</span>
+          <span class="pill"><Icon name="CalendarDays" size={14} strokeWidth={2.2} /> Established {site.stats.sinceYear}</span>
+        </div>
+      </div>
+      <div class="fade-in stagger-2">
+        <div class="relative">
+          <div class="rounded-3xl overflow-hidden border border-line shadow-lift aspect-[4/5]">
+            <img src="/images/home/tj.png" alt="TJ from TJ Mods modifying a car in the Ilford workshop" class="w-full h-full object-cover" loading="lazy" width="640" height="800" />
+          </div>
+          <!-- 15-year heritage badge (original site asset) -->
+          <div class="absolute -bottom-5 -left-3 md:-left-5 flex items-center gap-3 glass-light rounded-2xl p-3 pr-5 shadow-lift">
+            <img src="/images/badge/15-years.png" alt="15 years of experience" class="h-14 w-14 object-contain" width="56" height="56" loading="lazy" />
+            <span class="leading-tight">
+              <span class="block font-display font-extrabold text-navy text-lg">15+ years</span>
+              <span class="block text-muted text-sm">Established {site.stats.sinceYear}</span>
+            </span>
+          </div>
+          <div class="absolute -top-3 -right-3 md:-right-5 pill pill-red shadow-lift">
+            <Icon name="Car" size={14} strokeWidth={2.2} /> {site.clientRange}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats band -->
+  <section class="section-navy py-10 md:py-12 relative overflow-hidden">
+    <div class="container-mcp relative">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 text-center">
+        {stats.map((s) => (
+          <div>
+            <div class="big-number text-white">
+              {/^\d+$/.test(s.value)
+                ? <span data-count={s.value} data-suffix={s.suffix}>0{s.suffix}</span>
+                : <span>{s.value}<span class="text-red-bright">{s.suffix}</span></span>}
+            </div>
+            <p class="text-white/55 text-[0.82rem] mt-2 font-mono uppercase tracking-wider">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why customers trust us (5 USPs) -->
+  <section class="py-16 md:py-24 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Why choose us"
+        title="Premium work, looked after from start to finish"
+        intro="Five things every customer can count on when they bring their car to TJ Mods."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-6 mt-12">
+        {usps.map((u, i) => (
+          <div class={`card text-center flex flex-col items-center fade-in stagger-${(i % 5) + 1}`}>
+            <span class="tile-icon tile-icon-red mb-4"><Icon name={u.icon} size={22} strokeWidth={2} /></span>
+            <h3 class="font-display font-bold text-navy text-lg mb-2">{u.title}</h3>
+            <p class="text-muted text-[0.92rem] leading-snug text-pretty">{u.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Seven services under one roof -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Seven specialist services, under one roof"
+        intro="Everything your car needs in one trusted East London garage - fitted by an experienced team and backed by premium brand partners."
+        align="left"
+        ctaHref="/services"
+        ctaLabel="See all services"
+      />
+      <div class="flex flex-wrap gap-2.5 mt-10">
+        {services.map((s) => (
+          <a href={`/services/${s.slug}`} class="tag !py-2.5 !px-4">
+            <Icon name={s.icon} size={16} strokeWidth={2} />
+            {s.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand-partner accreditation -->
+  <BrandStrip
+    eyebrow="Brand-partner accredited"
+    heading="The brands we trust"
+    intro="We fit premium, industry-leading films and systems from eight world-class partners - so every modification is built to last."
+  />
+
+  <!-- A look at our work -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Real work · Real cars"
+        title="A look at what we do"
+        align="left"
+        ctaHref="/gallery"
+        ctaLabel="See our gallery"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mt-10">
+        {aboutShots.map((g, i) => (
+          <a href="/gallery" class={`about-shot fade-in stagger-${(i % 3) + 1}`}>
+            <img src={g.src} alt={g.alt} loading="lazy" width="640" height="480" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>
+
+<style>
+  .about-shot { position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid rgb(var(--rgb-border)); aspect-ratio: 4/3; background: #0F0F0F; }
+  .about-shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .about-shot:hover img { transform: scale(1.06); }
+</style>

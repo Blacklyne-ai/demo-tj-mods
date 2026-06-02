@@ -1,0 +1,46 @@
+---
+import { brands } from '../data/brands';
+import SectionHeading from './SectionHeading.astro';
+interface Props {
+  heading?: string;
+  eyebrow?: string;
+  intro?: string;
+  compact?: boolean;
+}
+const {
+  heading = 'We use the best brands around the world',
+  eyebrow = 'Brand-partner accredited',
+  intro = 'We fit premium, industry-leading films and systems - so every modification is built to last.',
+  compact = false,
+} = Astro.props;
+---
+<section class={`${compact ? 'py-12 md:py-16' : 'py-16 md:py-24'} section-snow`}>
+  <div class="container-mcp">
+    {!compact && <SectionHeading eyebrow={eyebrow} title={heading} intro={intro} align="center" />}
+    <div class={`grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 ${compact ? '' : 'mt-12'}`}>
+      {brands.map((b, i) => (
+        <div class={`group fade-in stagger-${(i % 4) + 1}`}>
+          <div class="brand-tile" title={b.blurb}>
+            <img src={b.logo} alt={`${b.name} - brand partner`} loading="lazy" width="160" height="80" />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-tile {
+    display: flex; align-items: center; justify-content: center; height: 100%;
+    min-height: 96px; padding: 1.25rem 1rem;
+    background: #fff; border: 1px solid rgb(var(--rgb-border)); border-radius: var(--radius-lg);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), border-color 0.3s ease, box-shadow 0.4s ease;
+  }
+  .brand-tile img {
+    max-height: 52px; width: auto; object-fit: contain;
+    filter: grayscale(1); opacity: 0.62;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+  }
+  .group:hover .brand-tile { transform: translateY(-4px); border-color: rgb(var(--rgb-red) / 0.35); box-shadow: var(--shadow-lift); }
+  .group:hover .brand-tile img { filter: grayscale(0); opacity: 1; }
+</style>

@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+interface Props { items: { q: string; a: string }[]; }
+const { items } = Astro.props;
+---
+<div class="space-y-3">
+  {items.map((item) => (
+    <details class="faq group">
+      <summary>
+        <span>{item.q}</span>
+        <span class="faq-ico"><Icon name="Plus" size={18} strokeWidth={2.4} /></span>
+      </summary>
+      <div class="faq-body"><p>{item.a}</p></div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq { border: 1px solid rgb(var(--rgb-border)); border-radius: var(--radius-lg); background: #fff; overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+  .faq[open] { border-color: rgb(var(--rgb-red) / 0.35); box-shadow: var(--shadow-soft); }
+  .faq summary {
+    list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.1rem 1.35rem; font-family: var(--font-display); font-weight: 700; color: rgb(var(--rgb-navy)); font-size: 1.02rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-ico { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 9px; background: rgb(var(--rgb-red) / 0.08); color: rgb(var(--rgb-red-deep)); flex-shrink: 0; transition: transform 0.3s ease, background 0.3s ease; }
+  .faq[open] .faq-ico { transform: rotate(45deg); background: rgb(var(--rgb-red)); color: #fff; }
+  .faq-body { padding: 0 1.35rem 1.25rem; color: rgb(var(--rgb-muted)); line-height: 1.7; }
+</style>

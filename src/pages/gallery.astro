@@ -1,0 +1,158 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { galleryImages, galleryCategories } from '../data/gallery';
+import { site } from '../data/site';
+
+const title = 'Gallery | TJ Mods Car Modification East London | Wrapping, Tinting, PPF';
+const description = 'Browse the TJ Mods portfolio of real car modification work in East London - tinting, wrapping, PPF, audio, lighting, parking sensors & security.';
+---
+<Layout title={title} description={description} current="/gallery" ogImage="/images/gallery/wrapping/wrap-4.png">
+  <PageHero
+    eyebrow="Our work"
+    title="The TJ Mods gallery"
+    subtitle="Real modifications carried out at our Ilford garage - from window tints and full wraps to PPF, audio, lighting and security."
+    image="/images/gallery/window-tinting/wt-7.jpg"
+    crumb="Gallery"
+    primary={{ href: '/contact-us', label: 'Book your visit Now' }}
+  />
+
+  <section class="py-14 md:py-20">
+    <div class="container-mcp">
+      <!-- Filter pills -->
+      <div class="flex flex-wrap items-center gap-2.5 mb-3" role="tablist" aria-label="Filter gallery by service">
+        {galleryCategories.map((c, i) => (
+          <button class={`gfilter ${i === 0 ? 'is-active' : ''}`} data-filter={c} role="tab" aria-selected={i === 0}>{c}</button>
+        ))}
+      </div>
+      <p class="text-sm text-muted mb-8"><span id="gal-count">{galleryImages.length}</span> of {galleryImages.length} projects shown</p>
+
+      <!-- Grid -->
+      <div id="gal-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        {galleryImages.map((g, i) => (
+          <button class="gitem" data-cat={g.category} data-index={i} data-src={g.src} data-alt={g.alt} aria-label={`View: ${g.alt}`}>
+            <img src={g.src} alt={g.alt} loading="lazy" width="500" height="375" />
+            <span class="gitem-cat">{g.category}</span>
+            <span class="gitem-zoom"><Icon name="Plus" size={18} strokeWidth={2.4} /></span>
+          </button>
+        ))}
+      </div>
+      <p id="gal-empty" class="hidden text-center text-muted py-16">No projects in this category yet.</p>
+    </div>
+  </section>
+
+  <CtaBand title="Like what you see?" text={`Book your car in with TJ Mods. Call ${site.phoneDisplay}, message us on WhatsApp, or drop into our Ilford garage.`} />
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
+    <button class="lb-close" id="lb-close" aria-label="Close">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <figure class="lb-figure">
+      <img id="lb-img" src="" alt="" />
+      <figcaption id="lb-cap" class="lb-cap"></figcaption>
+    </figure>
+    <button class="lb-nav lb-next" id="lb-next" aria-label="Next"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</Layout>
+
+<style>
+  .gfilter {
+    padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600;
+    background: rgb(var(--rgb-navy) / 0.04); color: rgb(var(--rgb-navy) / 0.7);
+    border: 1px solid rgb(var(--rgb-border)); cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+  }
+  .gfilter:hover { color: rgb(var(--rgb-navy)); border-color: rgb(var(--rgb-navy) / 0.25); transform: translateY(-1px); }
+  .gfilter.is-active { color: #fff; background: linear-gradient(180deg,#E63946,#D71E28); border-color: transparent; box-shadow: var(--shadow-red); }
+
+  .gitem { position: relative; display: block; padding: 0; border: 1px solid rgb(var(--rgb-border)); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; aspect-ratio: 4/3; background: #0F0F0F; isolation: isolate; }
+  .gitem img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .gitem:hover img { transform: scale(1.07); }
+  .gitem::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgb(8 8 8 / 0.55) 100%); opacity: 0; transition: opacity 0.3s ease; }
+  .gitem:hover::after { opacity: 1; }
+  .gitem-cat { position: absolute; left: 0.6rem; bottom: 0.6rem; z-index: 2; font-family: var(--font-mono); font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; background: rgb(15 15 15 / 0.7); padding: 0.25rem 0.55rem; border-radius: 999px; backdrop-filter: blur(6px); opacity: 0; transform: translateY(6px); transition: all 0.3s ease; }
+  .gitem:hover .gitem-cat { opacity: 1; transform: translateY(0); }
+  .gitem-zoom { position: absolute; top: 0.6rem; right: 0.6rem; z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; color: #fff; background: rgb(215 30 40 / 0.9); opacity: 0; transform: scale(0.7); transition: all 0.3s ease; }
+  .gitem:hover .gitem-zoom { opacity: 1; transform: scale(1); }
+  .gitem.is-hidden { display: none; }
+
+  .lb { position: fixed; inset: 0; z-index: 90; display: none; align-items: center; justify-content: center; padding: 1.5rem; background: rgb(4 4 4 / 0.92); backdrop-filter: blur(8px); }
+  .lb.is-open { display: flex; animation: lbIn 0.3s ease; }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb-figure { margin: 0; max-width: min(1100px, 92vw); max-height: 86vh; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+  .lb-figure img { max-width: 100%; max-height: 78vh; object-fit: contain; border-radius: var(--radius-md); box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.8); }
+  .lb-cap { color: rgb(255 255 255 / 0.7); font-size: 0.85rem; font-family: var(--font-mono); }
+  .lb-close { position: absolute; top: 1.1rem; right: 1.1rem; width: 46px; height: 46px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; color: #fff; background: rgb(255 255 255 / 0.1); border: 1px solid rgb(255 255 255 / 0.2); cursor: pointer; transition: all 0.25s ease; }
+  .lb-close:hover { background: linear-gradient(180deg,#E63946,#D71E28); }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; color: #fff; background: rgb(255 255 255 / 0.1); border: 1px solid rgb(255 255 255 / 0.2); cursor: pointer; transition: all 0.25s ease; }
+  .lb-nav:hover { background: linear-gradient(180deg,#E63946,#D71E28); }
+  .lb-prev { left: 1rem; } .lb-next { right: 1rem; }
+  @media (max-width: 640px) { .lb-prev { left: 0.4rem; } .lb-next { right: 0.4rem; } .lb-nav { width: 42px; height: 42px; } }
+</style>
+
+<script>
+  const grid = document.getElementById('gal-grid');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.gitem'));
+  const filters = Array.from(document.querySelectorAll<HTMLElement>('.gfilter'));
+  const countEl = document.getElementById('gal-count');
+  const emptyEl = document.getElementById('gal-empty');
+  let visible = items.slice();
+
+  function applyFilter(cat: string) {
+    visible = [];
+    items.forEach((it) => {
+      const show = cat === 'All' || it.dataset.cat === cat;
+      it.classList.toggle('is-hidden', !show);
+      if (show) visible.push(it);
+    });
+    if (countEl) countEl.textContent = String(visible.length);
+    emptyEl?.classList.toggle('hidden', visible.length > 0);
+    grid?.classList.toggle('hidden', visible.length === 0);
+  }
+
+  filters.forEach((f) =>
+    f.addEventListener('click', () => {
+      filters.forEach((x) => { x.classList.remove('is-active'); x.setAttribute('aria-selected', 'false'); });
+      f.classList.add('is-active'); f.setAttribute('aria-selected', 'true');
+      applyFilter(f.dataset.filter || 'All');
+    })
+  );
+
+  // Deep-link from homepage pills: /gallery#Car%20Wrapping
+  const hash = decodeURIComponent(location.hash.replace('#', ''));
+  if (hash) { const m = filters.find((f) => f.dataset.filter === hash); if (m) m.click(); }
+
+  // ── Lightbox ──
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const lbCap = document.getElementById('lb-cap');
+  let curIndex = 0;
+
+  function openAt(el: HTMLElement) {
+    curIndex = visible.indexOf(el);
+    render(); lb?.classList.add('is-open'); lb?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function render() {
+    const el = visible[curIndex]; if (!el || !lbImg) return;
+    lbImg.src = el.dataset.src || ''; lbImg.alt = el.dataset.alt || '';
+    if (lbCap) lbCap.textContent = `${el.dataset.cat} · ${curIndex + 1} / ${visible.length}`;
+  }
+  function close() { lb?.classList.remove('is-open'); lb?.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  function step(d: number) { if (!visible.length) return; curIndex = (curIndex + d + visible.length) % visible.length; render(); }
+
+  items.forEach((it) => it.addEventListener('click', () => openAt(it)));
+  document.getElementById('lb-close')?.addEventListener('click', close);
+  document.getElementById('lb-next')?.addEventListener('click', () => step(1));
+  document.getElementById('lb-prev')?.addEventListener('click', () => step(-1));
+  lb?.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb?.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+  });
+</script>

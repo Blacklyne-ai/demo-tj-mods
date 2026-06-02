@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import MapBlock from '../components/MapBlock.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { services, usps } from '../data/services';
+import { whyChoose, stats } from '../data/content';
+import { galleryPreview, galleryCategories } from '../data/gallery';
+import { site, telLink, whatsappLink } from '../data/site';
+
+const title = 'TJ Mods | Professional Car Modification East London | Window Tinting, Car Wrapping, PPF';
+const description = site.description;
+---
+<Layout title={title} description={description} current="/" ogImage="/images/hero/slide-1.jpg">
+  <Hero />
+
+  <!-- Stats band -->
+  <section class="section-navy py-10 md:py-12 relative overflow-hidden">
+    <div class="container-mcp relative">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 text-center">
+        {stats.map((s) => (
+          <div>
+            <div class="big-number text-white">
+              {/^\d+$/.test(s.value)
+                ? <span data-count={s.value} data-suffix={s.suffix}>0{s.suffix}</span>
+                : <span>{s.value}<span class="text-red-bright">{s.suffix}</span></span>}
+            </div>
+            <p class="text-white/55 text-[0.82rem] mt-2 font-mono uppercase tracking-wider">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why choose TJ Mods -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="order-2 lg:order-1 fade-in">
+        <span class="eyebrow mb-5">{whyChoose.eyebrow}</span>
+        <h2 class="heading-lg text-balance mb-6">{whyChoose.heading}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">{whyChoose.body}</p>
+        <ul class="space-y-3.5 mb-9">
+          {usps.map((u) => (
+            <li class="flex items-start gap-3.5">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-navy text-white flex-shrink-0"><Icon name={u.icon} size={18} strokeWidth={2} /></span>
+              <span>
+                <span class="block font-display font-bold text-navy">{u.title}</span>
+                <span class="block text-muted text-[0.92rem] leading-snug">{u.body}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <a href="/contact-us" class="btn btn-primary btn-lg">Book your visit Now <Icon name="ArrowRight" size={16} strokeWidth={2.5} /></a>
+      </div>
+      <div class="order-1 lg:order-2 fade-in stagger-2">
+        <div class="relative">
+          <div class="rounded-3xl overflow-hidden border border-line shadow-lift aspect-[4/5]">
+            <img src="/images/about/tj-wrapping.png" alt="TJ Mods wrapping a car in the Ilford workshop" class="w-full h-full object-cover" loading="lazy" width="640" height="800" />
+          </div>
+          <!-- 15-year heritage badge (original site asset) -->
+          <div class="absolute -bottom-5 -left-3 md:-left-5 flex items-center gap-3 glass-light rounded-2xl p-3 pr-5 shadow-lift">
+            <img src="/images/badge/15-years.png" alt="15 years of experience" class="h-14 w-14 object-contain" width="56" height="56" loading="lazy" />
+            <span class="leading-tight">
+              <span class="block font-display font-extrabold text-navy text-lg">15+ years</span>
+              <span class="block text-muted text-sm">Established 2010</span>
+            </span>
+          </div>
+          <div class="absolute -top-3 -right-3 md:-right-5 pill pill-red shadow-lift">
+            <Icon name="Car" size={14} strokeWidth={2.2} /> Mercedes to Aston Martin
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our services -->
+  <section class="py-16 md:py-24 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Our services"
+        title="Everything your car needs, under one roof"
+        intro="Seven specialist modification services, fitted by an experienced team and backed by premium brand partners."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mt-12">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+        <!-- 8th tile keeps the grid symmetric + adds a clear CTA -->
+        <a href="/contact-us" class="card-navy flex flex-col justify-between fade-in" style="min-height: 100%;">
+          <div>
+            <span class="tile-icon tile-icon-red mb-4"><Icon name="MessageCircle" size={22} strokeWidth={2} /></span>
+            <h3 class="font-display font-bold text-white text-xl mb-2">Not sure what you need?</h3>
+            <p class="text-white/65 text-[0.93rem] leading-relaxed">Tell us about your car and budget - we'll talk you through the options. No obligation.</p>
+          </div>
+          <span class="arrow-link arrow-link-light mt-6 self-start text-[0.92rem]">Get a free quote <Icon name="ArrowRight" size={15} strokeWidth={2.4} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured real work (cinematic band) -->
+  <section class="relative overflow-hidden">
+    <div class="featured-band">
+      <img src="/images/hero/featured.jpg" alt="Real window tinting work by TJ Mods" class="featured-img" loading="lazy" width="1900" height="1430" />
+      <div class="absolute inset-0 hero-overlay"></div>
+      <div class="container-mcp relative z-10 py-20 md:py-28">
+        <div class="max-w-2xl">
+          <span class="eyebrow eyebrow-light mb-5">Real work · Real cars</span>
+          <h2 class="heading-lg text-white text-balance mb-5 hero-text-shadow">From a Mercedes Benz through to an Aston Martin</h2>
+          <p class="text-lg text-white/80 leading-relaxed mb-8 max-w-xl hero-text-shadow">We've worked on a huge variety of cars over 15+ years. Take a look at our gallery to see real modifications carried out at our Ilford garage.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="/gallery" class="btn btn-light btn-lg">View our gallery <Icon name="ArrowRight" size={16} strokeWidth={2.5} /></a>
+            <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-glass btn-lg"><Icon name="MessageCircle" size={18} strokeWidth={2.2} /> WhatsApp us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand partnerships -->
+  <BrandStrip />
+
+  <!-- Gallery preview -->
+  <section class="py-16 md:py-24">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Our gallery"
+        title="A look at our recent work"
+        align="left"
+        ctaHref="/gallery"
+        ctaLabel="See our gallery"
+      />
+      <div class="flex flex-wrap gap-2 mt-8">
+        {galleryCategories.map((c) => (
+          <a href="/gallery" class="tag !py-2 !px-3.5 text-[0.82rem]">{c}</a>
+        ))}
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-8">
+        {galleryPreview.map((g, i) => (
+          <a href="/gallery" class={`gal-shot fade-in stagger-${(i % 4) + 1}`}>
+            <img src={g.src} alt={g.alt} loading="lazy" width="500" height="500" />
+            <span class="gal-cat">{g.category}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Google reviews (policy-compliant) -->
+  <ReviewsSection />
+
+  <!-- Find us -->
+  <section class="py-16 md:py-24 section-snow">
+    <div class="container-mcp">
+      <SectionHeading eyebrow="Find us" title="Visit TJ Mods in Ilford" intro="Pop into our East London garage to see our colours and films in person, or get in touch for a quote." align="center" />
+      <div class="grid lg:grid-cols-5 gap-6 mt-12 items-stretch">
+        <div class="lg:col-span-3"><MapBlock height="h-full min-h-[420px]" /></div>
+        <div class="lg:col-span-2"><OpeningHours /></div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>
+
+<style>
+  .featured-band { position: relative; background: #0F0F0F; }
+  .featured-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+  .gal-shot { position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid rgb(var(--rgb-border)); aspect-ratio: 1/1; background: #0F0F0F; }
+  .gal-shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .gal-shot:hover img { transform: scale(1.07); }
+  .gal-cat { position: absolute; left: 0.6rem; bottom: 0.6rem; font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; background: rgb(15 15 15 / 0.7); padding: 0.25rem 0.55rem; border-radius: 999px; backdrop-filter: blur(6px); opacity: 0; transition: opacity 0.3s ease; }
+  .gal-shot:hover .gal-cat { opacity: 1; }
+</style>

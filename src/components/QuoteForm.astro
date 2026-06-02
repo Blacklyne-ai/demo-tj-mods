@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import { services } from '../data/services';
+interface Props { subject?: string; }
+const { subject = 'General Enquiry' } = Astro.props;
+const subjects = [
+  'General Enquiry',
+  ...services.map((s) => s.name),
+  'Quote Request',
+];
+---
+<form id="enquiry-form" class="card-feature !p-6 md:!p-8" novalidate>
+  <p class="text-sm text-muted mb-6 flex items-start gap-2">
+    <Icon name="Info" size={16} strokeWidth={2} class="text-red-deep flex-shrink-0 mt-0.5" />
+    Send us the details and we'll get straight back to you. Your enquiry opens in your email or WhatsApp - we never store your data on this site.
+  </p>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label class="field-label" for="qf-name">Your name</label>
+      <input class="field" id="qf-name" name="name" type="text" autocomplete="name" placeholder="Full name" required />
+    </div>
+    <div>
+      <label class="field-label" for="qf-phone">Phone</label>
+      <input class="field" id="qf-phone" name="phone" type="tel" autocomplete="tel" placeholder="Mobile number" />
+    </div>
+    <div>
+      <label class="field-label" for="qf-email">Email</label>
+      <input class="field" id="qf-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" />
+    </div>
+    <div>
+      <label class="field-label" for="qf-vehicle">Vehicle</label>
+      <input class="field" id="qf-vehicle" name="vehicle" type="text" placeholder="Make &amp; model" />
+    </div>
+    <div class="sm:col-span-2">
+      <label class="field-label" for="qf-subject">Service</label>
+      <select class="field" id="qf-subject" name="subject">
+        {subjects.map((s) => <option value={s} selected={s === subject}>{s}</option>)}
+      </select>
+    </div>
+    <div class="sm:col-span-2">
+      <label class="field-label" for="qf-message">Message</label>
+      <textarea class="field" id="qf-message" name="message" rows="4" placeholder="Tell us what you're after..."></textarea>
+    </div>
+  </div>
+  <label class="flex items-start gap-2.5 mt-4 text-sm text-muted cursor-pointer">
+    <input type="checkbox" id="qf-consent" required class="mt-1 accent-[#D71E28] w-4 h-4 flex-shrink-0" />
+    <span>I consent to TJ Mods using these details to respond to my enquiry, in line with the <a href="/privacy-policy" class="text-red-deep underline underline-offset-2">Privacy Policy</a>.</span>
+  </label>
+  <div class="flex flex-col sm:flex-row gap-3 mt-6">
+    <button type="submit" class="btn btn-primary btn-lg flex-1">
+      <Icon name="Mail" size={17} strokeWidth={2.2} /> Send by email
+    </button>
+    <button type="button" id="qf-wa" class="btn btn-whatsapp btn-lg flex-1">
+      <Icon name="MessageCircle" size={18} strokeWidth={2.2} /> Send by WhatsApp
+    </button>
+  </div>
+  <p id="qf-note" class="text-sm text-red-deep mt-3 hidden" role="alert"></p>
+</form>
+
+<script define:vars={{ email: site.email, waDigits: site.phoneDigits }}>
+  const form = document.getElementById('enquiry-form');
+  const note = document.getElementById('qf-note');
+  const val = (id) => (document.getElementById(id)?.value || '').trim();
+
+  function compose() {
+    const name = val('qf-name');
+    const consent = document.getElementById('qf-consent')?.checked;
+    if (!name) { warn('Please add your name so we know who to reply to.'); return null; }
+    if (!consent) { warn('Please tick the consent box so we can reply to your enquiry.'); return null; }
+    note?.classList.add('hidden');
+    const subject = val('qf-subject') || 'Enquiry';
+    const lines = [
+      `Name: ${name}`,
+      val('qf-phone') && `Phone: ${val('qf-phone')}`,
+      val('qf-email') && `Email: ${val('qf-email')}`,
+      val('qf-vehicle') && `Vehicle: ${val('qf-vehicle')}`,
+      val('qf-message') && `Message: ${val('qf-message')}`,
+    ].filter(Boolean);
+    return { subject: `TJ Mods enquiry: ${subject}`, body: lines.join('\n') };
+  }
+  function warn(msg) { if (note) { note.textContent = msg; note.classList.remove('hidden'); } }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const c = compose();
+    if (!c) return;
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(c.subject)}&body=${encodeURIComponent(c.body)}`;
+  });
+  document.getElementById('qf-wa')?.addEventListener('click', () => {
+    const c = compose();
+    if (!c) return;
+    window.open(`https://wa.me/${waDigits}?text=${encodeURIComponent(c.subject + '\n\n' + c.body)}`, '_blank', 'noopener');
+  });
+</script>
