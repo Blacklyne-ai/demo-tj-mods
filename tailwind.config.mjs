@@ -52,9 +52,9 @@ export default {
         amber: 'rgb(var(--rgb-amber) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['Archivo', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', '"SF Mono"', 'monospace'],
+        sans: ['Roboto', 'system-ui', '-apple-system', 'Segoe UI', 'Arial', 'sans-serif'],
+        display: ['Roboto', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        mono: ['"Roboto Mono"', 'ui-monospace', '"SF Mono"', 'monospace'],
       },
       borderRadius: {
         pill: '999px',
