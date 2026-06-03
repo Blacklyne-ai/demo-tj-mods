@@ -25,8 +25,8 @@
 <script>
   const KEY = 'mcp-cookie-consent';
   const banner = document.getElementById('cookie-banner');
-  const show = () => banner && (banner.style.transform = 'translateY(0)');
-  const hide = () => banner && (banner.style.transform = 'translateY(150%)');
+  const show = () => { if (!banner) return; banner.style.transform = 'translateY(0)'; document.body.classList.add('cookie-shown'); };
+  const hide = () => { if (!banner) return; banner.style.transform = 'translateY(150%)'; document.body.classList.remove('cookie-shown'); };
 
   const stored = (() => { try { return localStorage.getItem(KEY); } catch { return 'dismissed'; } })();
   if (!stored) setTimeout(show, 1200);

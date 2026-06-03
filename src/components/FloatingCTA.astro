@@ -18,7 +18,7 @@ import Icon from './Icon.astro';
   </a>
 </div>
 
-<style>
+<style is:global>
   .floating-mobile {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
     gap: 0; padding: 0;
@@ -26,7 +26,11 @@ import Icon from './Icon.astro';
     backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
     border-top: 1px solid rgba(15,15,15,0.1);
     padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
   }
+  /* Stay out of the cookie banner's way */
+  body.cookie-shown .floating-mobile { transform: translateY(120%) !important; }
   .fm-cell {
     flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
     padding: 0.85rem 0.3rem; color: rgb(var(--rgb-navy));
